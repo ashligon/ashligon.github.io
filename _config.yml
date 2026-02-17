@@ -29,6 +29,7 @@ baseurl: "" # the subpath of your site, e.g. /blog
 github_username:  ashligon
 
 # Build settings
+remote_theme: h01000110/windows-95
 # theme: minima
 # plugins:
 #   - jekyll-feed
