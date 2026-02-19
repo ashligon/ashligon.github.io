@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>filet crochet pixel mapper</title>
+    <link rel="stylesheet" href="/assets/css/filet-crochet.css">
+	<link rel="icon" href="/assets/img/favicon.ico" type="image/x-icon">
+</head>
+<body>
+    <div class="wrapper">
+        <div class="header">
+            <p>FILET-CROCHET PIXEL MAPPER</p>
+        </div>
+        <div class="main">
+            <div class="controls">
+                <div class="color-card">
+                    <div class="color-box">
+                        <input type="color" id="color-select">
+                    </div>
+                    <span>pen color</span>
+                </div>
+                <div class="color-card cc2">
+                    <div class="color-box">
+                        <input type="color" id="bg-color-select" value="#ffffff">
+                    </div>
+                    <span>background color</span>
+                </div>
+                <button id="color-fill">color fill</button>
+                <button id="color-grabber">color grabber</button>
+                
+                <button id="eraser-btn">toggle eraser</button>
+                <button id="rainbow-btn">toggle rainbow</button>
+                <button id="shader-btn">toggle shading</button>
+                <button id="lighten-btn">toggle lighten</button>
+                
+                <div class="slider-box">
+                    <input type="range" value="24" min="1" max="60" id="range-slider"
+                    onmousemove="rangeSliderValue(this.value)" onChange="rangeSlider(this.value)">
+                    <div id="progress-bar"></div>
+                </div>
+
+                <p class="grid-size">grid size: <span id="range-value">24</span> x <span id="range-value">24</span></p>
+
+                <button id="grid-btn" class="btn-on">toggle grid lines</button>
+                <button id="clear-grid">clear</button>
+            </div>
+            <div class="grid-wrapper">
+                <div class="grid-container toggle-grid" draggable="false"></div>
+            </div>
+        </div>
+    </div>
+    <script src="/assets/js/filet-crochet.js"></script>
+</body>
+
+</html>
