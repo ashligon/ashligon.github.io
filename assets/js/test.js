@@ -86,6 +86,21 @@ function rangeSliderValue(value) {
   }
 }
 
+const clearButton = document.querySelector('#clear-grid-btn');
+function clearGrid() {
+  gridItems = document.querySelectorAll('.grid-item');
+  for (let i = 0; i < gridItems.length; i++) {
+    gridItems[i].style.backgroundColor = gridBgColor;
+    gridItems[i].removeAttribute('data-inked');
+  }
+  container.style.backgroundColor = gridBgColor;
+
+  setTimeout(function () {
+    clearButton.classList.remove('btn-on');
+  }, 800);
+}
+clearButton.addEventListener('click', clearGrid);
+
 // toggle button color when clicked
 const buttons = document.getElementsByTagName('button');
 for (let i = 0; i < buttons.length; i++) {

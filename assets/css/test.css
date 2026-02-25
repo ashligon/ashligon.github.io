@@ -118,6 +118,7 @@ button {
     padding: 9px 15px;
     width: 100%;
     margin-bottom: 10px;
+  cursor: pointer; /* Cursor on hover */
 }
 
 .btn-on {
