@@ -1,12 +1,16 @@
 const container = document.querySelector('.grid-container');
+const clearButton = document.querySelector('#clear-grid-btn');
+const eraserButton = document.querySelector('#eraser-btn');
+const allButtons = document.getElementsByTagName('button');
 
-let gridSize = 8;
+let gridSize = 28;
 let gridBgColor = '#ffffff';
 let gridInkColor = '#000000';
+let inkEraser = false;
+
 container.style.backgroundColor = gridBgColor;
 
 // grid
-
 function createGrid() {
     let gridWidth = container.offsetWidth / gridSize;
     container.style.gridTemplateColumns = `repeat(${gridSize - 3}, ${gridWidth}px) 1fr 1fr 1fr`;
@@ -58,20 +62,7 @@ function drawGridClick(e) {
   }
 }
 
-// eraser toggle
-
-let inkEraser = false;
-const eraserButton = document.querySelector('#eraser-btn');
-eraserButton.addEventListener('click', () => {
-  if (inkEraser) {
-    inkEraser = false;
-  } else {
-    inkEraser = true;
-  }
-});
-
 // slider
-
 function rangeSlider(value) {
   gridSize = parseInt(value);
   deleteGrid();
@@ -86,39 +77,47 @@ function rangeSliderValue(value) {
   }
 }
 
-const clearButton = document.querySelector('#clear-grid-btn');
+// clear
 function clearGrid() {
-  gridItems = document.querySelectorAll('.grid-item');
-  for (let i = 0; i < gridItems.length; i++) {
-    gridItems[i].style.backgroundColor = gridBgColor;
-    gridItems[i].removeAttribute('data-inked');
+  if (confirm("are you sure you want to clear your work?")) {
+    gridItems = document.querySelectorAll('.grid-item');
+    for (let i = 0; i < gridItems.length; i++) {
+      gridItems[i].style.backgroundColor = gridBgColor;
+      gridItems[i].removeAttribute('data-inked');
+    }
+    container.style.backgroundColor = gridBgColor;
   }
-  container.style.backgroundColor = gridBgColor;
 
   setTimeout(function () {
     clearButton.classList.remove('btn-on');
   }, 800);
 }
-clearButton.addEventListener('click', clearGrid);
-
-// toggle button color when clicked
-const buttons = document.getElementsByTagName('button');
-for (let i = 0; i < buttons.length; i++) {
-  buttons[i].addEventListener('click', () => {
-    buttons[i].classList.toggle('btn-on');
-  });
-}
 
 // listeners
-
 function listen() {
   gridItems = document.querySelectorAll('.grid-item');
   for (let i = 0; i < gridItems.length; i++) {
     gridItems[i].addEventListener('mousedown', drawGridClick);
   }
+
+  eraserButton.addEventListener('click', () => {
+    if (inkEraser) {
+      inkEraser = false;
+    } else {
+      inkEraser = true;
+    }
+  });
+
+  clearButton.addEventListener('click', clearGrid); 
+
+  // toggle button styling when clicked
+  for (let i = 0; i < allButtons.length; i++) {
+    allButtons[i].addEventListener('click', () => {
+      allButtons[i].classList.toggle('btn-on');
+    });
+  }
 }
 
 // initial calls
-
 createGrid();
 listen();

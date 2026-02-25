@@ -33,6 +33,7 @@
 /* sidebar */
 
 .controls {
+    place-content: center;
     width: 300px;
     background-color: #202020;
     border-radius: 4px;
@@ -118,8 +119,9 @@ button {
     padding: 9px 15px;
     width: 100%;
     margin-bottom: 10px;
-  cursor: pointer; /* Cursor on hover */
+    cursor: pointer;
 }
+
 
 .btn-on {
     background-color: #d796db;
