@@ -6,6 +6,7 @@
 <body>
   <div class="main">
     <div class="controls">
+      <button id="eraser-btn">toggle eraser</button>
       <div class="slidecontainer">
         <input type="range" min="8" max="48" value="8" class="slider" id="grid-slider" 
         onmousemove="rangeSliderValue(this.value)" onchange="rangeSlider(this.value)">
@@ -13,7 +14,7 @@
       </div>
     </div>
     <div class="grid-wrapper">
-      <div class="grid-container toggle-grid" draggable="false"></div>
+      <div class="grid-container" draggable="false"></div>
     </div>
     <script src="/assets/js/test.js"></script>
   </div>

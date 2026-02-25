@@ -104,3 +104,23 @@ body {
   margin: 0;
   padding: 0;
 }
+
+button {
+    display: block;
+    color: #d796db;
+    font-weight: 500;
+    font-family: 'Courier New', Courier, monospace;
+    background-color: rgba(0,0,0,0);
+    font-size: 14px;
+    outline: none;
+    border: 1px solid #d796db;
+    border-radius: 2px;
+    padding: 9px 15px;
+    width: 100%;
+    margin-bottom: 10px;
+}
+
+.btn-on {
+    background-color: #d796db;
+    color: #ffffff;
+}

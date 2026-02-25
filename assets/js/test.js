@@ -1,8 +1,9 @@
 const container = document.querySelector('.grid-container');
 
 let gridSize = 8;
-let bgColor = '#ffffff';
-container.style.backgroundColor = bgColor;
+let gridBgColor = '#ffffff';
+let gridInkColor = '#000000';
+container.style.backgroundColor = gridBgColor;
 
 // grid
 
@@ -15,16 +16,24 @@ function createGrid() {
         for (let col = 0; col < gridSize; col++) {
             const square = document.createElement('div');
             square.classList.add('grid-item');
-            square.style.backgroundColor = bgColor;
+            square.style.backgroundColor = gridBgColor;
 
             // add numbering
             // TODO: fix formatting when numbers get too big
             // maybe we only want nums when we export to pdf
-            if (col == 0) {
-                square.innerHTML += `<p class='num-label'>${(gridSize-row)}</p>`
-            } else if (row == gridSize-1) {
-                square.innerHTML += `<p class='num-label'>${(col+1)}</p>`
-            }
+            // if (col == 0) {
+            //     const num_label = document.createElement('div');
+            //     num_label.style.backgroundColor = gridBgColor;
+            //     num_label.style.float = 'left';
+            //     num_label.innerHTML += `<p class='num-label'>${(gridSize-row)}</p>`;
+            //     square.appendChild(num_label);
+            // } else if (row == gridSize-1) {
+            //     const num_label = document.createElement('div');
+            //     num_label.style.backgroundColor = gridBgColor;
+            //     num_label.style.float = 'bottom';
+            //     num_label.innerHTML += `<p class='num-label'>${(col+1)}</p>`;
+            //     square.appendChild(num_label);
+            // }
 
             container.appendChild(square);
         }
@@ -33,10 +42,33 @@ function createGrid() {
 
 function deleteGrid() {
   while (container.firstChild) {
+    container.removeEventListener('mousedown', drawGridClick);
     container.lastChild = null;
     container.removeChild(container.lastChild);
   }
 }
+
+function drawGridClick(e) {
+  if (inkEraser) {
+    e.target.style.backgroundColor = gridBgColor;
+    e.target.removeAttribute('data-inked');
+  } else {
+    e.target.style.backgroundColor = gridInkColor;
+    e.target.setAttribute('data-inked', 'true');
+  }
+}
+
+// eraser toggle
+
+let inkEraser = false;
+const eraserButton = document.querySelector('#eraser-btn');
+eraserButton.addEventListener('click', () => {
+  if (inkEraser) {
+    inkEraser = false;
+  } else {
+    inkEraser = true;
+  }
+});
 
 // slider
 
@@ -44,6 +76,7 @@ function rangeSlider(value) {
   gridSize = parseInt(value);
   deleteGrid();
   createGrid();
+  listen();
 }
 
 function rangeSliderValue(value) {
@@ -53,6 +86,24 @@ function rangeSliderValue(value) {
   }
 }
 
-// calls
+// toggle button color when clicked
+const buttons = document.getElementsByTagName('button');
+for (let i = 0; i < buttons.length; i++) {
+  buttons[i].addEventListener('click', () => {
+    buttons[i].classList.toggle('btn-on');
+  });
+}
+
+// listeners
+
+function listen() {
+  gridItems = document.querySelectorAll('.grid-item');
+  for (let i = 0; i < gridItems.length; i++) {
+    gridItems[i].addEventListener('mousedown', drawGridClick);
+  }
+}
+
+// initial calls
 
 createGrid();
+listen();
