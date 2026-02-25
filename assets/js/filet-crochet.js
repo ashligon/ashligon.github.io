@@ -1,3 +1,5 @@
+// code originally taken and modified from https://github.com/bscottnz/esketch
+
 //##############################################################################
 // After revisting this project, I was thinking whether or not I should clean up
 // the code. I decided to leave it as it was so I would have something to look

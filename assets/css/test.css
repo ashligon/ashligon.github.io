@@ -1,0 +1,41 @@
+.grid-wrapper {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 660px;
+    height: 660px;
+    background-color: #202020;
+    border-radius: 4px;
+}
+
+.grid-container {
+    display: grid;
+    height: 600px;
+    width: 600px;
+    border: 1px solid rgb(156, 156, 156);
+}
+
+.grid-item {
+  place-content: center;
+  border:
+    1px solid rgb(156, 156, 156);
+  color: rgb(0, 0, 0);
+  font-weight: 700;
+}
+
+.num-label {
+    font-family: 'Courier New', Courier, monospace;
+}
+
+html {
+  margin: 0;
+  padding: 0;
+  background: hsl(210deg 15% 6%);
+}
+
+body {
+  display: flex;
+  justify-content: center;
+  margin: 0;
+  padding: 0;
+}
