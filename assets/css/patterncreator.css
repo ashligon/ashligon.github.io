@@ -29,7 +29,7 @@
 .num-label {
     color: rgb(0, 0, 0);
     font-family: 'Courier New', Courier, monospace;
-    font-size:0.5rem;
+    font-size:.5cqi;
 }
 
 /* sidebar */
@@ -95,6 +95,14 @@
     justify-content: space-evenly;
 }
 
+.header {
+    margin-top: 50px;
+    color: #d796db;
+    font-size: 50px;
+    text-align: center;
+    font-family: 'Courier New', Courier, monospace;
+}
+
 html {
     margin: 0;
     padding: 0;
@@ -129,3 +137,4 @@ button {
     background-color: #d796db;
     color: #ffffff;
 }
+
