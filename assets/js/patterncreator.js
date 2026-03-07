@@ -135,8 +135,10 @@ function listen() {
   eraserButton.addEventListener('click', () => {
     if (inkEraser) {
       inkEraser = false;
+      eraserButton.textContent = 'toggle eraser';
     } else {
       inkEraser = true;
+      eraserButton.textContent = 'untoggle eraser';
     }
   });
 

@@ -1,27 +1,27 @@
+---
+layout: default
+---
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
+  <link rel="stylesheet" href="https://unpkg.com/98.css">
   <link rel="stylesheet" href="/assets/css/patterncreator.css">
 </head>
 <body>
-  <div class="wrapper">
-    <div class="header">
-        <p>filet-crochet pattern creator</p>
+  <div class="main">
+    <div class="controls">
+      <button id="eraser-btn">toggle eraser</button>
+      <button id="clear-grid-btn">clear</button>
+      <button id="download-btn">save pattern</button>
+      <div class="slide-container">
+        <input type="range" min="8" max="48" value="28" class="slider" id="grid-slider" 
+        onmousemove="rangeSliderValue(this.value)" onchange="rangeSlider(this.value)">
+        <p class="slider-label">grid size: <span id="range-value">28</span> x <span id="range-value">28</span></p>
+      </div>
     </div>
-    <div class="main">
-      <div class="controls">
-        <button id="clear-grid-btn">clear</button>
-        <button id="eraser-btn">toggle eraser</button>
-        <button id="download-btn">save pattern</button>
-        <div class="slidecontainer">
-          <input type="range" min="8" max="48" value="28" class="slider" id="grid-slider" 
-          onmousemove="rangeSliderValue(this.value)" onchange="rangeSlider(this.value)">
-          <p class="grid-size">grid size: <span id="range-value">28</span> x <span id="range-value">28</span></p>
-        </div>
-      </div>
-      <div class="grid-wrapper">
-        <div id="capture" class="grid-container" draggable="false"></div>
-      </div>
+    <div class="grid-wrapper">
+      <div id="capture" class="grid-container" draggable="false"></div>
     </div>
   </div>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>

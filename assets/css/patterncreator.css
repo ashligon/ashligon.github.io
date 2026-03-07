@@ -1,93 +1,44 @@
-/* pixel grid */
-
 .grid-wrapper {
     display: flex;
     justify-content: center;
     align-items: center;
-    width: 660px;
-    height: 660px;
-    background-color: #202020;
+    width: 570px;
+    height: 570px;
+    background: silver;
     border-radius: 4px;
 }
 
 .grid-container {
     display: grid;
-    height: 600px;
-    width: 600px;
+    height: 550px;
+    width: 550px;
     border: 1px solid rgb(156, 156, 156);
 }
 
 .grid-item {
-    border: 1px solid rgb(156, 156, 156);
-    color: rgb(0, 0, 0);
     display: flex;
-    justify-content: center;
-    align-items: center;
+    place-content: center;
     overflow: hidden;
+    border: 1px solid rgb(156, 156, 156);
 }
 
 .num-label {
-    color: rgb(0, 0, 0);
-    font-family: 'Courier New', Courier, monospace;
-    font-size:.5cqi;
+    font-size:.4cqi;
 }
-
-/* sidebar */
 
 .controls {
     place-content: center;
     width: 300px;
-    background-color: #202020;
-    border-radius: 4px;
     padding: 30px;
+    border-radius: 4px;
 }
 
-/**** slider ****/
-.slidecontainer {
-    width: 100%; /* Width of the outside container */
+.slide-container {
+    margin-top: 10px;
 }
 
-.slider {
-    -webkit-appearance: none;  /* Override default CSS styles */
-    appearance: none;
-    width: 100%; /* Full-width */
-    height: 25px; /* Specified height */
-    background: #ffffff; /* white background */
-    outline: none; /* Remove outline */
-    opacity: 0.7; /* Set transparency (for mouse-over effects on hover) */
-    -webkit-transition: .2s; /* 0.2 seconds transition on hover */
-    transition: opacity .2s;
-}
-
-/* Mouse-over effects */
-.slider:hover {
-    opacity: 1; /* Fully shown on mouse-over */
-}
-
-/* The slider handle (use -webkit- (Chrome, Opera, Safari, Edge) and -moz- (Firefox) to override default look) */
-.slider::-webkit-slider-thumb {
-    -webkit-appearance: none; /* Override default look */
-    appearance: none;
-    width: 25px; /* Set a specific slider handle width */
-    height: 25px; /* Slider handle height */
-    background: #d796db; /* Green background */
-    cursor: pointer; /* Cursor on hover */
-}
-
-.slider::-moz-range-thumb {
-    width: 25px; /* Set a specific slider handle width */
-    height: 25px; /* Slider handle height */
-    background: #d796db; /* Green background */
-    cursor: pointer; /* Cursor on hover */
-}
-
-.grid-size {
-    font-family: 'Courier New', Courier, monospace;
-    font-weight: 500;
-    font-size: 14px;
-    color: #d796db;
+.slider-label {
     text-align: center;
-    margin-bottom: 10px;
 }
 
 .main {
@@ -95,46 +46,15 @@
     justify-content: space-evenly;
 }
 
-.header {
-    margin-top: 50px;
-    color: #d796db;
-    font-size: 50px;
-    text-align: center;
-    font-family: 'Courier New', Courier, monospace;
-}
-
-html {
-    margin: 0;
-    padding: 0;
-    background: hsl(210deg 15% 6%);
-}
-
-body {
-    display: flex;
-    justify-content: center;
-    margin: 0;
-    padding: 0;
-}
-
 button {
-    display: block;
-    color: #d796db;
-    font-weight: 500;
-    font-family: 'Courier New', Courier, monospace;
-    background-color: rgba(0,0,0,0);
-    font-size: 14px;
-    outline: none;
-    border: 1px solid #d796db;
-    border-radius: 2px;
-    padding: 9px 15px;
-    width: 100%;
-    margin-bottom: 10px;
-    cursor: pointer;
+    width: 100%
 }
 
+button:hover {
+  background: #d0d0d0; /* Slightly lighter on hover */
+}
 
 .btn-on {
-    background-color: #d796db;
+    background-color: #569876;
     color: #ffffff;
 }
-
