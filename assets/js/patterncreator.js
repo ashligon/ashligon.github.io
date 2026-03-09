@@ -58,6 +58,7 @@ function deleteGrid() {
 function drawGridClick(e) {
   gridCol = e.target.getAttribute('data-grid-col');
   gridRow = e.target.getAttribute('data-grid-row');
+  // grab num label from grid item
   const label = document.querySelector(`div.num-label[data-grid-col="${gridCol}"][data-grid-row="${gridRow}"] p`);
 
   if (inkEraser) {
@@ -112,10 +113,25 @@ function savePattern() {
 
 // slider
 function rangeSlider(value) {
-  gridSize = parseInt(value);
-  deleteGrid();
-  createGrid();
-  listen();
+  var redraw = true;
+
+  // if ink is on the grid, prompt the user before clearing and resizing
+  const inkFound = document.querySelectorAll("div[data-inked='true']");
+  if ((inkFound) && (inkFound.length > 0) && !confirm("are you sure you want to clear your work?")) {
+    redraw = false;
+  }
+
+  if (redraw) {
+    gridSize = parseInt(value);
+    deleteGrid();
+    createGrid();
+    listen();
+  } else {
+    // revert slider back to current grid size
+    rangeSliderValue(gridSize);
+    const slider = document.getElementsByClassName('slider')[0];
+    slider.value = gridSize;
+  }
 }
 
 function rangeSliderValue(value) {
