@@ -4,6 +4,7 @@ const clearButton = document.querySelector('#clear-btn');
 const eraserButton = document.querySelector('#eraser-btn');
 const saveButton = document.querySelector('#save-btn');
 const allButtons = document.getElementsByTagName('button');
+const gridSlider = document.getElementById('grid-slider');
 
 let gridSize = 28;
 let gridBgColor = '#ffffff';
@@ -78,6 +79,19 @@ function drawGridClick(e) {
   }
 }
 
+// eraser
+function toggleEraser(e) {
+  if (inkEraser) {
+    inkEraser = false;
+    e.target.textContent = 'toggle eraser';
+    e.target.classList.remove('btn-on');
+  } else {
+    inkEraser = true;
+    e.target.textContent = 'untoggle eraser';
+    e.target.classList.toggle('btn-on');
+  }
+}
+
 // clear
 function clearGrid() {
   if (confirm("are you sure you want to clear your work?")) {
@@ -114,7 +128,7 @@ function savePattern() {
 }
 
 // slider
-function rangeSlider(value) {
+function rangeSlider(e) {
   var redraw = true;
 
   // if ink is on the grid, prompt the user before clearing and resizing
@@ -124,22 +138,21 @@ function rangeSlider(value) {
   }
 
   if (redraw) {
-    gridSize = parseInt(value);
+    gridSize = parseInt(e.target.value);
     deleteGrid();
     createGrid();
     listen();
   } else {
     // revert slider back to current grid size
-    const slider = document.getElementById('grid-slider');
-    slider.value = gridSize;
-    rangeSliderValue(gridSize);
+    e.target.value = gridSize;
+    updateRangeSliderValues(gridSize);
   }
 }
 
-function rangeSliderValue(value) {
+function updateRangeSliderValues(e) {
   let gridLabels = document.querySelectorAll('#range-value');
   for (let i = 0; i < gridLabels.length; i++) {
-    gridLabels[i].textContent = value;
+    gridLabels[i].textContent = e.target.value;
   }
 }
 
@@ -149,26 +162,11 @@ function listen() {
   for (let i = 0; i < gridItems.length; i++) {
     gridItems[i].addEventListener('mousedown', drawGridClick);
   }
-
-  eraserButton.addEventListener('click', () => {
-    if (inkEraser) {
-      inkEraser = false;
-      eraserButton.textContent = 'toggle eraser';
-    } else {
-      inkEraser = true;
-      eraserButton.textContent = 'untoggle eraser';
-    }
-  });
-
+  eraserButton.addEventListener('click', toggleEraser);
   clearButton.addEventListener('click', clearGrid); 
   saveButton.addEventListener('click', savePattern);
-
-  // toggle button styling when clicked
-  for (let i = 0; i < allButtons.length; i++) {
-    allButtons[i].addEventListener('click', () => {
-      allButtons[i].classList.toggle('btn-on');
-    });
-  }
+  gridSlider.addEventListener('change', rangeSlider); 
+  gridSlider.addEventListener('mousemove', updateRangeSliderValues); 
 }
 
 // initial calls
