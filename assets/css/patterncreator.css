@@ -11,8 +11,6 @@
 
 .grid-container {
     display: grid;
-    place-content: center;
-    text-align: center;
     height: 550px;
     width: 550px;
     border: 1px solid rgb(156, 156, 156);
@@ -20,14 +18,18 @@
 
 .grid-item {
     display: flex;
-    place-content: center;
-    text-align: center;
+    container-type: inline-size;
+    justify-content: center;
     overflow: hidden;
     border: 1px solid rgb(156, 156, 156);
 }
 
 .num-label {
-    font-size:.4cqi;
+    margin-top: auto;
+    margin-bottom: auto;
+    margin-left: auto;
+    margin-right: auto;
+    font-size:clamp(6px, 50cqi, 12px);
 }
 
 .controls {
@@ -55,10 +57,10 @@ button {
 }
 
 button:hover {
-  background: #d0d0d0; /* Slightly lighter on hover */
+  background: #d0d0d0;
 }
 
 .btn-on {
-    background-color: #569876;
-    color: #ffffff;
+    box-shadow: inset -1px -1px #fff, inset 1px 1px #0a0a0a, inset -2px -2px #dfdfdf, inset 2px 2px grey;
+    text-shadow: 1px 1px #222
 }

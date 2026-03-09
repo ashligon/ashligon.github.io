@@ -1,8 +1,8 @@
 
 const container = document.querySelector('.grid-container');
-const clearButton = document.querySelector('#clear-grid-btn');
+const clearButton = document.querySelector('#clear-btn');
 const eraserButton = document.querySelector('#eraser-btn');
-const saveButton = document.querySelector('#download-btn');
+const saveButton = document.querySelector('#save-btn');
 const allButtons = document.getElementsByTagName('button');
 
 let gridSize = 28;
@@ -128,9 +128,9 @@ function rangeSlider(value) {
     listen();
   } else {
     // revert slider back to current grid size
-    rangeSliderValue(gridSize);
-    const slider = document.getElementsByClassName('slider')[0];
+    const slider = document.getElementById('grid-slider');
     slider.value = gridSize;
+    rangeSliderValue(gridSize);
   }
 }
 
