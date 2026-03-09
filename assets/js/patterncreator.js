@@ -30,16 +30,18 @@ function createGrid() {
             if (col == 0) {
                 const num_label = document.createElement('div');
                 num_label.classList.add('num-label');
+                num_label.classList.add('disable-selection');
                 num_label.setAttribute('data-grid-col', col);
                 num_label.setAttribute('data-grid-row', row);
-                num_label.innerHTML += `<p>${(gridSize-row)}</p>`;
+                num_label.innerHTML += `<p class="disable-selection">${(gridSize-row)}</p>`;
                 square.appendChild(num_label);
             } else if (row == gridSize-1) {
                 const num_label = document.createElement('div');
                 num_label.classList.add('num-label');
+                num_label.classList.add('disable-selection');
                 num_label.setAttribute('data-grid-col', col);
                 num_label.setAttribute('data-grid-row', row);
-                num_label.innerHTML += `<p>${(col+1)}</p>`;
+                num_label.innerHTML += `<p class="disable-selection">${(col+1)}</p>`;
                 square.appendChild(num_label);
             }
             container.appendChild(square);
