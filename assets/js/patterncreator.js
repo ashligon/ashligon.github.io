@@ -23,6 +23,7 @@ function createGrid() {
         for (let col = 0; col < gridSize; col++) {
             const square = document.createElement('div');
             square.classList.add('grid-item');
+            square.setAttribute('draggable', 'false');
             square.setAttribute('data-grid-col', col);
             square.setAttribute('data-grid-row', row);
             square.style.backgroundColor = gridBgColor;
@@ -32,17 +33,19 @@ function createGrid() {
                 const num_label = document.createElement('div');
                 num_label.classList.add('num-label');
                 num_label.classList.add('disable-selection');
+                num_label.setAttribute('draggable', 'false');
                 num_label.setAttribute('data-grid-col', col);
                 num_label.setAttribute('data-grid-row', row);
-                num_label.innerHTML += `<p class="disable-selection">${(gridSize-row)}</p>`;
+                num_label.innerHTML += `<p class="disable-selection" draggable="false">${(gridSize-row)}</p>`;
                 square.appendChild(num_label);
             } else if (row == gridSize-1) {
                 const num_label = document.createElement('div');
                 num_label.classList.add('num-label');
                 num_label.classList.add('disable-selection');
+                num_label.setAttribute('draggable', 'false');
                 num_label.setAttribute('data-grid-col', col);
                 num_label.setAttribute('data-grid-row', row);
-                num_label.innerHTML += `<p class="disable-selection">${(col+1)}</p>`;
+                num_label.innerHTML += `<p class="disable-selection draggable="false"">${(col+1)}</p>`;
                 square.appendChild(num_label);
             }
             container.appendChild(square);
@@ -53,6 +56,7 @@ function createGrid() {
 function deleteGrid() {
   while (container.firstChild) {
     container.removeEventListener('mousedown', drawGridClick);
+    container.removeEventListener('mouseenter', drawGridClickHover);
     container.lastChild = null;
     container.removeChild(container.lastChild);
   }
@@ -75,6 +79,30 @@ function drawGridClick(e) {
     e.target.setAttribute('data-inked', 'true');
     if (label != null) {
       label.style.color = gridBgColor;
+    }
+  }
+}
+
+// draw when hovering into a grid with the mouse held down
+function drawGridClickHover(e) {
+  if (e.shiftKey) {
+    gridCol = e.target.getAttribute('data-grid-col');
+    gridRow = e.target.getAttribute('data-grid-row');
+    // grab num label from grid item
+    const label = document.querySelector(`div.num-label[data-grid-col="${gridCol}"][data-grid-row="${gridRow}"] p`);
+
+    if (inkEraser) {
+      e.target.style.backgroundColor = gridBgColor;
+      e.target.removeAttribute('data-inked');
+      if (label != null) {
+        label.style.color = gridInkColor;
+      }
+    } else {
+      e.target.style.backgroundColor = gridInkColor;
+      e.target.setAttribute('data-inked', 'true');
+      if (label != null) {
+        label.style.color = gridBgColor;
+      }
     }
   }
 }
@@ -161,6 +189,7 @@ function listen() {
   gridItems = document.querySelectorAll('.grid-item');
   for (let i = 0; i < gridItems.length; i++) {
     gridItems[i].addEventListener('mousedown', drawGridClick);
+    gridItems[i].addEventListener('mouseenter', drawGridClickHover);
   }
   eraserButton.addEventListener('click', toggleEraser);
   clearButton.addEventListener('click', clearGrid); 
