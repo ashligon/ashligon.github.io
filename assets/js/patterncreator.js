@@ -13,7 +13,7 @@ let inkEraser = false;
 
 container.style.backgroundColor = gridBgColor;
 
-// grid
+/* grid */
 function createGrid() {
     let gridWidth = container.offsetWidth / gridSize;
     container.style.gridTemplateColumns = `repeat(${gridSize - 3}, ${gridWidth}px) 1fr 1fr 1fr`;
@@ -83,8 +83,8 @@ function drawGridClick(e) {
   }
 }
 
-// draw when hovering into a grid with the mouse held down
 function drawGridClickHover(e) {
+  // draw when hovering into a grid with the shift button held down
   if (e.shiftKey) {
     gridCol = e.target.getAttribute('data-grid-col');
     gridRow = e.target.getAttribute('data-grid-row');
@@ -107,7 +107,7 @@ function drawGridClickHover(e) {
   }
 }
 
-// eraser
+/* eraser */
 function toggleEraser(e) {
   if (inkEraser) {
     inkEraser = false;
@@ -120,7 +120,7 @@ function toggleEraser(e) {
   }
 }
 
-// clear
+/* clear */
 function clearGrid() {
   if (confirm("are you sure you want to clear your work?")) {
     gridItems = document.querySelectorAll('.grid-item');
@@ -143,9 +143,15 @@ function clearGrid() {
   }, 800);
 }
 
-// save
+/* save */
 function savePattern() {
-  html2canvas(document.querySelector("#capture")).then(canvas => {
+  // mobile devices
+  if (screen.width < 1024) {
+      document.getElementById("viewport").setAttribute("content", "width=1200px");
+  }
+  html2canvas(document.querySelector("#capture"), {
+    scale: window.devicePixelRatio > 2 ? 2 : window.devicePixelRatio
+  }).then(canvas => {
     var base64image = canvas.toDataURL("image/png");
     window.open(base64image , "_blank");
   });
@@ -155,7 +161,7 @@ function savePattern() {
   }, 800);
 }
 
-// slider
+/* slider */
 function rangeSlider(e) {
   var redraw = true;
 
@@ -171,7 +177,7 @@ function rangeSlider(e) {
     createGrid();
     listen();
   } else {
-    // revert slider back to current grid size
+    // user cancelled, revert slider back to current grid size
     e.target.value = gridSize;
     updateRangeSliderValues(gridSize);
   }
@@ -184,7 +190,7 @@ function updateRangeSliderValues(e) {
   }
 }
 
-// listeners
+/* listeners */
 function listen() {
   gridItems = document.querySelectorAll('.grid-item');
   for (let i = 0; i < gridItems.length; i++) {
