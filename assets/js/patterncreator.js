@@ -30,22 +30,22 @@ function createGrid() {
 
             // add numbering
             if (col == 0) {
-                const num_label = document.createElement('div');
+                const num_label = document.createElement('p');
                 num_label.classList.add('num-label');
                 num_label.classList.add('disable-selection');
                 num_label.setAttribute('draggable', 'false');
                 num_label.setAttribute('data-grid-col', col);
                 num_label.setAttribute('data-grid-row', row);
-                num_label.innerHTML += `<p class="disable-selection" draggable="false">${(gridSize-row)}</p>`;
+                num_label.textContent += `${(gridSize-row)}`;
                 square.appendChild(num_label);
             } else if (row == gridSize-1) {
-                const num_label = document.createElement('div');
+                const num_label = document.createElement('p');
                 num_label.classList.add('num-label');
                 num_label.classList.add('disable-selection');
                 num_label.setAttribute('draggable', 'false');
                 num_label.setAttribute('data-grid-col', col);
                 num_label.setAttribute('data-grid-row', row);
-                num_label.innerHTML += `<p class="disable-selection draggable="false"">${(col+1)}</p>`;
+                num_label.textContent += `${(col+1)}`;
                 square.appendChild(num_label);
             }
             container.appendChild(square);
@@ -66,7 +66,7 @@ function drawGridClick(e) {
   gridCol = e.target.getAttribute('data-grid-col');
   gridRow = e.target.getAttribute('data-grid-row');
   // grab num label from grid item
-  const label = document.querySelector(`div.num-label[data-grid-col="${gridCol}"][data-grid-row="${gridRow}"] p`);
+  const label = document.querySelector(`p.num-label[data-grid-col="${gridCol}"][data-grid-row="${gridRow}"]`);
 
   if (inkEraser) {
     e.target.style.backgroundColor = gridBgColor;
@@ -85,11 +85,11 @@ function drawGridClick(e) {
 
 function drawGridClickHover(e) {
   // draw when hovering into a grid with the shift button held down
-  if (e.shiftKey) {
+  if (e.buttons > 0) {
     gridCol = e.target.getAttribute('data-grid-col');
     gridRow = e.target.getAttribute('data-grid-row');
     // grab num label from grid item
-    const label = document.querySelector(`div.num-label[data-grid-col="${gridCol}"][data-grid-row="${gridRow}"] p`);
+    const label = document.querySelector(`p.num-label[data-grid-col="${gridCol}"][data-grid-row="${gridRow}"]`);
 
     if (inkEraser) {
       e.target.style.backgroundColor = gridBgColor;
@@ -130,7 +130,7 @@ function clearGrid() {
 
       gridCol = gridItems[i].getAttribute('data-grid-col');
       gridRow = gridItems[i].getAttribute('data-grid-row');
-      const label = document.querySelector(`div.num-label[data-grid-col="${gridCol}"][data-grid-row="${gridRow}"] p`);
+      const label = document.querySelector(`p.num-label[data-grid-col="${gridCol}"][data-grid-row="${gridRow}"]`);
       if (label) {
         label.style.color = gridInkColor;
       }
@@ -198,10 +198,10 @@ function listen() {
     gridItems[i].addEventListener('mouseenter', drawGridClickHover);
   }
   eraserButton.addEventListener('click', toggleEraser);
-  clearButton.addEventListener('click', clearGrid); 
+  clearButton.addEventListener('click', clearGrid);
   saveButton.addEventListener('click', savePattern);
-  gridSlider.addEventListener('change', rangeSlider); 
-  gridSlider.addEventListener('mousemove', updateRangeSliderValues); 
+  gridSlider.addEventListener('mousemove', updateRangeSliderValues);
+  gridSlider.addEventListener('change', rangeSlider);
 }
 
 // initial calls
