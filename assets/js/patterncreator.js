@@ -5,6 +5,7 @@ const eraserButton = document.querySelector('#eraser-btn');
 const saveButton = document.querySelector('#save-btn');
 const allButtons = document.getElementsByTagName('button');
 const gridSlider = document.getElementById('grid-slider');
+const mainWindow = document.querySelector('.main')
 
 let gridSize = 28;
 let gridBgColor = '#ffffff';
@@ -84,7 +85,6 @@ function drawGridClick(e) {
 }
 
 function drawGridClickHover(e) {
-  // draw when hovering into a grid with the shift button held down
   if (e.buttons > 0) {
     gridCol = e.target.getAttribute('data-grid-col');
     gridRow = e.target.getAttribute('data-grid-row');
@@ -109,14 +109,15 @@ function drawGridClickHover(e) {
 
 /* eraser */
 function toggleEraser(e) {
+  e.preventDefault()
   if (inkEraser) {
     inkEraser = false;
-    e.target.textContent = 'toggle eraser';
-    e.target.classList.remove('btn-on');
+    eraserButton.textContent = 'toggle eraser';
+    eraserButton.classList.remove('btn-on');
   } else {
     inkEraser = true;
-    e.target.textContent = 'untoggle eraser';
-    e.target.classList.toggle('btn-on');
+    eraserButton.textContent = 'untoggle eraser';
+    eraserButton.classList.toggle('btn-on');
   }
 }
 
@@ -202,6 +203,7 @@ function listen() {
   saveButton.addEventListener('click', savePattern);
   gridSlider.addEventListener('mousemove', updateRangeSliderValues);
   gridSlider.addEventListener('change', rangeSlider);
+  mainWindow.addEventListener('contextmenu', toggleEraser);
 }
 
 // initial calls
