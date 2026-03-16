@@ -11,6 +11,7 @@ let gridSize = 28;
 let gridBgColor = '#ffffff';
 let gridInkColor = '#000000';
 let inkEraser = false;
+let dragMode = false;
 
 container.style.backgroundColor = gridBgColor;
 
@@ -24,6 +25,7 @@ function createGrid() {
         for (let col = 0; col < gridSize; col++) {
             const square = document.createElement('div');
             square.classList.add('grid-item');
+            square.classList.add('disable-selection');
             square.setAttribute('draggable', 'false');
             square.setAttribute('data-grid-col', col);
             square.setAttribute('data-grid-row', row);
@@ -34,6 +36,7 @@ function createGrid() {
                 const num_label = document.createElement('p');
                 num_label.classList.add('num-label');
                 num_label.classList.add('disable-selection');
+                num_label.classList.add('disable-selection-text');
                 num_label.setAttribute('draggable', 'false');
                 num_label.setAttribute('data-grid-col', col);
                 num_label.setAttribute('data-grid-row', row);
@@ -43,6 +46,7 @@ function createGrid() {
                 const num_label = document.createElement('p');
                 num_label.classList.add('num-label');
                 num_label.classList.add('disable-selection');
+                num_label.classList.add('disable-selection-text');
                 num_label.setAttribute('draggable', 'false');
                 num_label.setAttribute('data-grid-col', col);
                 num_label.setAttribute('data-grid-row', row);
@@ -56,14 +60,34 @@ function createGrid() {
 
 function deleteGrid() {
   while (container.firstChild) {
-    container.removeEventListener('mousedown', drawGridClick);
-    container.removeEventListener('mouseenter', drawGridClickHover);
+    container.removeEventListener('mousedown', drawGridInk);
     container.lastChild = null;
     container.removeChild(container.lastChild);
   }
 }
 
-function drawGridClick(e) {
+function dragModeOn() {
+  console.log("drag mode on")
+  dragMode = true;
+
+  gridItems = document.querySelectorAll('.grid-item');
+  for (let i = 0; i < gridItems.length; i++) {
+    gridItems[i].addEventListener('mouseenter', drawGridInkHover);
+  }
+}
+
+function dragModeOff() {
+  console.log("drag mode off")
+  dragMode = false;
+
+  gridItems = document.querySelectorAll('.grid-item');
+  for (let i = 0; i < gridItems.length; i++) {
+    gridItems[i].removeEventListener('mouseenter', drawGridInkHover);
+  }
+}
+
+function drawGridInk(e) {
+  console.log(e);
   gridCol = e.target.getAttribute('data-grid-col');
   gridRow = e.target.getAttribute('data-grid-row');
   // grab num label from grid item
@@ -84,8 +108,10 @@ function drawGridClick(e) {
   }
 }
 
-function drawGridClickHover(e) {
-  if (e.buttons > 0) {
+function drawGridInkHover(e) {
+  console.log(e);
+  // make sure left-click mouse button is pressed
+  if (dragMode && (e.buttons > 0 && e.buttons === 1)) {
     gridCol = e.target.getAttribute('data-grid-col');
     gridRow = e.target.getAttribute('data-grid-row');
     // grab num label from grid item
@@ -195,15 +221,16 @@ function updateRangeSliderValues(e) {
 function listen() {
   gridItems = document.querySelectorAll('.grid-item');
   for (let i = 0; i < gridItems.length; i++) {
-    gridItems[i].addEventListener('mousedown', drawGridClick);
-    gridItems[i].addEventListener('mouseenter', drawGridClickHover);
+    gridItems[i].addEventListener('mousedown', drawGridInk);
   }
+  mainWindow.addEventListener('contextmenu', toggleEraser);
+  document.addEventListener('mousedown', dragModeOn);
+  document.addEventListener('mouseup', dragModeOff);
   eraserButton.addEventListener('click', toggleEraser);
   clearButton.addEventListener('click', clearGrid);
   saveButton.addEventListener('click', savePattern);
   gridSlider.addEventListener('mousemove', updateRangeSliderValues);
   gridSlider.addEventListener('change', rangeSlider);
-  mainWindow.addEventListener('contextmenu', toggleEraser);
 }
 
 // initial calls
