@@ -11,7 +11,7 @@ let gridSize = 28;
 let gridBgColor = '#ffffff';
 let gridInkColor = '#000000';
 let inkEraser = false;
-let dragMode = false;
+let mouseDown = false;
 
 container.style.backgroundColor = gridBgColor;
 
@@ -66,9 +66,8 @@ function deleteGrid() {
   }
 }
 
-function dragModeOn() {
-  console.log("drag mode on")
-  dragMode = true;
+function mouseDownOn() {
+  mouseDown = true;
 
   gridItems = document.querySelectorAll('.grid-item');
   for (let i = 0; i < gridItems.length; i++) {
@@ -76,9 +75,8 @@ function dragModeOn() {
   }
 }
 
-function dragModeOff() {
-  console.log("drag mode off")
-  dragMode = false;
+function mouseDownOff() {
+  mouseDown = false;
 
   gridItems = document.querySelectorAll('.grid-item');
   for (let i = 0; i < gridItems.length; i++) {
@@ -87,10 +85,9 @@ function dragModeOff() {
 }
 
 function drawGridInk(e) {
-  console.log(e);
+  // grab num label from grid item
   gridCol = e.target.getAttribute('data-grid-col');
   gridRow = e.target.getAttribute('data-grid-row');
-  // grab num label from grid item
   const label = document.querySelector(`p.num-label[data-grid-col="${gridCol}"][data-grid-row="${gridRow}"]`);
 
   if (inkEraser) {
@@ -109,12 +106,11 @@ function drawGridInk(e) {
 }
 
 function drawGridInkHover(e) {
-  console.log(e);
   // make sure left-click mouse button is pressed
-  if (dragMode && (e.buttons > 0 && e.buttons === 1)) {
+  if (mouseDown && (e.buttons > 0 && e.buttons === 1)) {
+    // grab num label from grid item
     gridCol = e.target.getAttribute('data-grid-col');
     gridRow = e.target.getAttribute('data-grid-row');
-    // grab num label from grid item
     const label = document.querySelector(`p.num-label[data-grid-col="${gridCol}"][data-grid-row="${gridRow}"]`);
 
     if (inkEraser) {
@@ -133,6 +129,11 @@ function drawGridInkHover(e) {
   }
 }
 
+function inkFound() {
+  const inkFound = document.querySelectorAll("div[data-inked='true']");
+  return (inkFound) && (inkFound.length > 0)
+}
+
 /* eraser */
 function toggleEraser(e) {
   e.preventDefault()
@@ -149,7 +150,7 @@ function toggleEraser(e) {
 
 /* clear */
 function clearGrid() {
-  if (confirm("are you sure you want to clear your work?")) {
+  if (inkFound() && confirm("are you sure you want to clear your work?")) {
     gridItems = document.querySelectorAll('.grid-item');
     for (let i = 0; i < gridItems.length; i++) {
       gridItems[i].style.backgroundColor = gridBgColor;
@@ -172,10 +173,6 @@ function clearGrid() {
 
 /* save */
 function savePattern() {
-  // mobile devices
-  if (screen.width < 1024) {
-      document.getElementById("viewport").setAttribute("content", "width=1200px");
-  }
   html2canvas(document.querySelector("#capture"), {
     scale: window.devicePixelRatio > 2 ? 2 : window.devicePixelRatio
   }).then(canvas => {
@@ -193,8 +190,7 @@ function rangeSlider(e) {
   var redraw = true;
 
   // if ink is on the grid, prompt the user before clearing and resizing
-  const inkFound = document.querySelectorAll("div[data-inked='true']");
-  if ((inkFound) && (inkFound.length > 0) && !confirm("are you sure you want to clear your work?")) {
+  if (inkFound() && !confirm("are you sure you want to clear your work?")) {
     redraw = false;
   }
 
@@ -217,6 +213,15 @@ function updateRangeSliderValues(e) {
   }
 }
 
+/* window */
+const handleOrientationChange = (e) => {
+  if (e.matches) {
+    document.getElementById('orientation-warning').style.display = "block";
+  } else {
+    document.getElementById('orientation-warning').style.display = "none";
+  }
+};
+
 /* listeners */
 function listen() {
   gridItems = document.querySelectorAll('.grid-item');
@@ -224,8 +229,9 @@ function listen() {
     gridItems[i].addEventListener('mousedown', drawGridInk);
   }
   mainWindow.addEventListener('contextmenu', toggleEraser);
-  document.addEventListener('mousedown', dragModeOn);
-  document.addEventListener('mouseup', dragModeOff);
+  window.matchMedia('(orientation: portrait)').addEventListener('change', handleOrientationChange); 
+  document.addEventListener('mousedown', mouseDownOn);
+  document.addEventListener('mouseup', mouseDownOff);
   eraserButton.addEventListener('click', toggleEraser);
   clearButton.addEventListener('click', clearGrid);
   saveButton.addEventListener('click', savePattern);
@@ -236,3 +242,4 @@ function listen() {
 // initial calls
 createGrid();
 listen();
+handleOrientationChange(window.matchMedia('(orientation: portrait)'));

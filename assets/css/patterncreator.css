@@ -78,3 +78,17 @@ button:hover {
   pointer-events: none;
 }
 
+.orientation-warning-box {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    text-align: center;
+    padding-top: 250px;
+
+    opacity: 0.9;
+    background-color: #4d3d4c;
+    color: black;
+}
