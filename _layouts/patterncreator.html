@@ -15,7 +15,8 @@ layout: default
     <div id="controls-container" class="controls">
       <button id="eraser-btn" title="(right click)">toggle eraser</button>
       <button id="clear-btn">clear</button>
-      <button id="save-btn">save pattern</button>
+      <button id="save-btn">save progress</button>
+      <button id="export-btn">export pattern</button>
       <div class="slide-container">
         <input type="range" min="10" max="48" value="28" class="slider" id="grid-slider">
         <p class="slider-label disable-selection"><span id="range-value">28</span> x <span id="range-value">28</span></p>
@@ -24,11 +25,12 @@ layout: default
     <div class="grid-wrapper">
       <div id="capture" class="grid-container" draggable="false"></div>
     </div>
+    <div id="orientation-warning" class="orientation-warning-box">
+      <p>* rotate your device for the best experience *</p>
+      <img src="/assets/img/rotate-device.png">
+    </div>
   </div>
-  <div id="orientation-warning" class="orientation-warning-box">
-    <img src="/assets/img/rotate-device.png">
-    <p>* rotate your device for the best experience *</p>
-  </div>
+  <div id="toast-notification-box"></div>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
   <script src="/assets/js/patterncreator.js"></script>
 </body>

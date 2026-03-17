@@ -50,6 +50,8 @@
 .main {
     display: flex;
     justify-content: space-evenly;
+    position: relative;
+    z-index: 1;
 }
 
 button {
@@ -80,15 +82,63 @@ button:hover {
 
 .orientation-warning-box {
     display: none;
-    position: fixed;
+    position: absolute;
     top: 0;
     left: 0;
     width: 100%;
     height: 100%;
     text-align: center;
-    padding-top: 250px;
-
+    padding-top: 100px;
     opacity: 0.9;
-    background-color: #4d3d4c;
+    background-color: silver;
     color: black;
+    z-index: 2;
+}
+
+#toast-notification-box {
+  visibility: hidden;
+  min-width: 250px;
+  margin-left: -125px;
+  text-align: center;
+  padding: 16px;
+  position: fixed;
+  z-index: 1;
+  left: 50%;
+  bottom: 30px;
+  background: silver;
+  font-family: "Pixelated MS Sans Serif", Arial;
+  font-size: 11px;
+  border: none;
+  border-radius: 0;
+  box-shadow: inset -1px -1px #d5aed4, inset 1px 1px #fff, inset -2px -2px grey, inset 2px 2px #dfdfdf;
+  color: transparent;
+  text-shadow: 0 0 #222;
+  opacity: 0.9;
+}
+
+#toast-notification-box.show {
+  visibility: visible;
+  -webkit-animation: fadein 0.5s, fadeout 0.5s 2.5s;
+  animation: fadein 0.5s, fadeout 0.5s 2.5s;
+}
+
+/* animations to fade toast in and out */
+@-webkit-keyframes fadein {
+  from {bottom: 0; opacity: 0;}
+  to {bottom: 30px; opacity: 1;}
+}
+
+@keyframes fadein {
+  from {bottom: 0; opacity: 0;}
+  to {bottom: 30px; opacity: 1;}
+}
+
+@-webkit-keyframes fadeout {
+  from {bottom: 30px; opacity: 1;}
+  to {bottom: 0; opacity: 0;}
+}
+
+@keyframes fadeout {
+  from {bottom: 30px; opacity: 1;}
+  to {bottom: 0; opacity: 0;}
 }

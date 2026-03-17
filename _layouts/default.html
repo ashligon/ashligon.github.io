@@ -80,7 +80,9 @@
 				<div class="btn"><span class="fa fa-window-minimize"></span></div>
 			</div>
 			<ul class="topbar">
-				<li>{{ page.date | date: '%B %-d, %Y' }}</li>
+                {% if page.title and page.title != 'pattern creator' %}
+				    <li>{{ page.date | date: '%B %-d, %Y' }}</li>
+                {% endif %}
 			</ul>
 			<div class="post_content">
         		{{ content }}
