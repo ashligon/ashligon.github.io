@@ -109,22 +109,25 @@ function mouseDownOff() {
 }
 
 function drawGridInk(e) {
-  // grab num label from grid item
-  gridCol = e.target.getAttribute('data-grid-col');
-  gridRow = e.target.getAttribute('data-grid-row');
-  const label = document.querySelector(`p.num-label[data-grid-col="${gridCol}"][data-grid-row="${gridRow}"]`);
+  // right clicks are reserved for eraser toggle
+  if (e.buttons > 0 && e.buttons !== 2) {
+    // grab num label from grid item
+    gridCol = e.target.getAttribute('data-grid-col');
+    gridRow = e.target.getAttribute('data-grid-row');
+    const label = document.querySelector(`p.num-label[data-grid-col="${gridCol}"][data-grid-row="${gridRow}"]`);
 
-  if (inkEraser) {
-    e.target.style.backgroundColor = gridBgColor;
-    e.target.removeAttribute('data-inked');
-    if (label != null) {
-      label.style.color = gridInkColor;
-    }
-  } else {
-    e.target.style.backgroundColor = gridInkColor;
-    e.target.setAttribute('data-inked', 'true');
-    if (label != null) {
-      label.style.color = gridBgColor;
+    if (inkEraser) {
+      e.target.style.backgroundColor = gridBgColor;
+      e.target.removeAttribute('data-inked');
+      if (label != null) {
+        label.style.color = gridInkColor;
+      }
+    } else {
+      e.target.style.backgroundColor = gridInkColor;
+      e.target.setAttribute('data-inked', 'true');
+      if (label != null) {
+        label.style.color = gridBgColor;
+      }
     }
   }
 }
@@ -346,14 +349,14 @@ const handleOrientationChange = (e) => {
 
 /* listeners */
 function listen() {
+  window.matchMedia('(orientation: portrait)').addEventListener('change', handleOrientationChange); 
+  document.addEventListener('mousedown', mouseDownOn);
+  document.addEventListener('mouseup', mouseDownOff);
+  mainWindow.addEventListener('contextmenu', toggleEraser);
   gridItems = document.querySelectorAll('.grid-item');
   for (let i = 0; i < gridItems.length; i++) {
     gridItems[i].addEventListener('mousedown', drawGridInk);
   }
-  mainWindow.addEventListener('contextmenu', toggleEraser);
-  window.matchMedia('(orientation: portrait)').addEventListener('change', handleOrientationChange); 
-  document.addEventListener('mousedown', mouseDownOn);
-  document.addEventListener('mouseup', mouseDownOff);
   eraserButton.addEventListener('click', toggleEraser);
   clearButton.addEventListener('click', clearGrid);
   saveButton.addEventListener('click', savePatternProgress);
