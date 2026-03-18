@@ -22,11 +22,10 @@ function createGrid() {
   let savedGridSize = localStorage.getItem('saved-grid-size');
   if (savedGridSize !== null) {
     gridSize = savedGridSize;
-
     gridSlider.value = gridSize;
     let gridLabels = document.querySelectorAll('#range-value');
-    for (let i = 0; i < gridLabels.length; i++) {
-      gridLabels[i].textContent = gridSize;
+    for (label of gridLabels) {
+      label.textContent = gridSize;
     }
   }
   let savedGrid = localStorage.getItem('saved-progress');
@@ -65,6 +64,12 @@ function createGrid() {
         num_label.setAttribute('data-grid-col', col);
         num_label.setAttribute('data-grid-row', row);
         num_label.textContent += `${(gridSize - row)}`;
+        if (square.getAttribute('data-inked') === 'true') {
+          num_label.style.color = gridBgColor;
+        } else {
+          num_label.style.color = gridInkColor;
+        }
+
         square.appendChild(num_label);
       } else if (row == gridSize - 1) {
         const num_label = document.createElement('p');
@@ -75,6 +80,11 @@ function createGrid() {
         num_label.setAttribute('data-grid-col', col);
         num_label.setAttribute('data-grid-row', row);
         num_label.textContent += `${(col + 1)}`;
+        if (square.getAttribute('data-inked') === 'true') {
+          num_label.style.color = gridBgColor;
+        } else {
+          num_label.style.color = gridInkColor;
+        }
         square.appendChild(num_label);
       }
       container.appendChild(square);
@@ -93,18 +103,18 @@ function deleteGrid() {
 function mouseDownOn() {
   mouseDown = true;
 
-  gridItems = document.querySelectorAll('.grid-item');
-  for (let i = 0; i < gridItems.length; i++) {
-    gridItems[i].addEventListener('mouseenter', drawGridInkHover);
+  let gridItems = document.querySelectorAll('.grid-item');
+  for (item of gridItems) {
+    item.addEventListener('mouseenter', drawGridInkHover);
   }
 }
 
 function mouseDownOff() {
   mouseDown = false;
 
-  gridItems = document.querySelectorAll('.grid-item');
-  for (let i = 0; i < gridItems.length; i++) {
-    gridItems[i].removeEventListener('mouseenter', drawGridInkHover);
+  let gridItems = document.querySelectorAll('.grid-item');
+  for (item of gridItems) {
+    item.removeEventListener('mouseenter', drawGridInkHover);
   }
 }
 
@@ -112,8 +122,8 @@ function drawGridInk(e) {
   // right clicks are reserved for eraser toggle
   if (e.buttons > 0 && e.buttons !== 2) {
     // grab num label from grid item
-    gridCol = e.target.getAttribute('data-grid-col');
-    gridRow = e.target.getAttribute('data-grid-row');
+    let gridCol = e.target.getAttribute('data-grid-col');
+    let gridRow = e.target.getAttribute('data-grid-row');
     const label = document.querySelector(`p.num-label[data-grid-col="${gridCol}"][data-grid-row="${gridRow}"]`);
 
     if (inkEraser) {
@@ -136,8 +146,8 @@ function drawGridInkHover(e) {
   // make sure left-click mouse button is pressed
   if (mouseDown && (e.buttons > 0 && e.buttons === 1)) {
     // grab num label from grid item
-    gridCol = e.target.getAttribute('data-grid-col');
-    gridRow = e.target.getAttribute('data-grid-row');
+    let gridCol = e.target.getAttribute('data-grid-col');
+    let gridRow = e.target.getAttribute('data-grid-row');
     const label = document.querySelector(`p.num-label[data-grid-col="${gridCol}"][data-grid-row="${gridRow}"]`);
 
     if (inkEraser) {
@@ -178,13 +188,13 @@ function toggleEraser(e) {
 /* clear */
 function clearGrid() {
   if (inkFound() && confirm('are you sure you want to clear your work?')) {
-    gridItems = document.querySelectorAll('.grid-item');
-    for (let i = 0; i < gridItems.length; i++) {
-      gridItems[i].style.backgroundColor = gridBgColor;
-      gridItems[i].removeAttribute('data-inked');
+    let gridItems = document.querySelectorAll('.grid-item');
+    for (item of gridItems) {
+      item.style.backgroundColor = gridBgColor;
+      item.removeAttribute('data-inked');
 
-      gridCol = gridItems[i].getAttribute('data-grid-col');
-      gridRow = gridItems[i].getAttribute('data-grid-row');
+      let gridCol = item.getAttribute('data-grid-col');
+      let gridRow = item.getAttribute('data-grid-row');
       const label = document.querySelector(`p.num-label[data-grid-col="${gridCol}"][data-grid-row="${gridRow}"]`);
       if (label) {
         label.style.color = gridInkColor;
@@ -201,10 +211,10 @@ function clearGrid() {
 
 /* save */
 function savePatternProgress(e) {
-  gridMap = new Map();
-  gridItems = document.querySelectorAll('.grid-item');
-  for (let i = 0; i < gridItems.length; i++) {
-    gridMap.set(`${gridItems[i].getAttribute('data-grid-col')},${gridItems[i].getAttribute('data-grid-row')}`, gridItems[i].getAttribute('data-inked'));
+  let gridMap = new Map();
+  let gridItems = document.querySelectorAll('.grid-item');
+  for (item of gridItems) {
+    gridMap.set(`${item.getAttribute('data-grid-col')},${item.getAttribute('data-grid-row')}`, item.getAttribute('data-inked'));
   }
   const objFromMap = Object.fromEntries(gridMap);
   console.log(JSON.stringify(objFromMap))
@@ -212,7 +222,7 @@ function savePatternProgress(e) {
   localStorage.setItem('saved-grid-size', gridSize)
   localStorage.setItem('saved-progress', JSON.stringify(objFromMap))
 
-  var toast = document.getElementById('toast-notification-box');
+  let toast = document.getElementById('toast-notification-box');
   toast.textContent = 'progress saved';
   toast.className = 'show';
 
@@ -309,7 +319,7 @@ function displayData(name, imageBlob) {
 
 /* slider */
 function rangeSlider(e) {
-  var redraw = true;
+  let redraw = true;
 
   // if ink is on the grid, prompt the user before clearing and resizing
   if (inkFound() && !confirm("are you sure you want to clear your work?")) {
@@ -331,8 +341,8 @@ function rangeSlider(e) {
 
 function updateRangeSliderValues(e) {
   let gridLabels = document.querySelectorAll('#range-value');
-  for (let i = 0; i < gridLabels.length; i++) {
-    gridLabels[i].textContent = e.target.value;
+  for (label of gridLabels) {
+    label.textContent = e.target.value;
   }
 }
 
@@ -353,9 +363,9 @@ function listen() {
   document.addEventListener('mousedown', mouseDownOn);
   document.addEventListener('mouseup', mouseDownOff);
   mainWindow.addEventListener('contextmenu', toggleEraser);
-  gridItems = document.querySelectorAll('.grid-item');
-  for (let i = 0; i < gridItems.length; i++) {
-    gridItems[i].addEventListener('mousedown', drawGridInk);
+  let gridItems = document.querySelectorAll('.grid-item');
+  for (item of gridItems) {
+    item.addEventListener('mousedown', drawGridInk);
   }
   eraserButton.addEventListener('click', toggleEraser);
   clearButton.addEventListener('click', clearGrid);
