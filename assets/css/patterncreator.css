@@ -1,61 +1,61 @@
 .grid-wrapper {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    width: 570px;
-    height: 570px;
-    background: silver;
-    padding: 10px;
-    border-radius: 4px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 570px;
+  height: 570px;
+  background: silver;
+  padding: 10px;
+  border-radius: 4px;
 }
 
 .grid-container {
-    display: grid;
-    height: 550px;
-    width: 550px;
-    border: 1px solid rgb(156, 156, 156);
+  display: grid;
+  height: 550px;
+  width: 550px;
+  border: 1px solid rgb(156, 156, 156);
 }
 
 .grid-item {
-    display: flex;
-    container-type: inline-size;
-    justify-content: center;
-    overflow: hidden;
-    border: 1px solid rgb(156, 156, 156);
+  display: flex;
+  container-type: inline-size;
+  justify-content: center;
+  overflow: hidden;
+  border: 1px solid rgb(156, 156, 156);
 }
 
 .num-label {
-    margin-top: auto;
-    margin-bottom: auto;
-    margin-left: auto;
-    margin-right: auto;
-    font-size:clamp(6px, 50cqi, 12px);
+  margin-top: auto;
+  margin-bottom: auto;
+  margin-left: auto;
+  margin-right: auto;
+  font-size: clamp(6px, 50cqi, 12px);
 }
 
 .controls {
-    place-content: center;
-    width: 300px;
-    padding: 30px;
-    border-radius: 4px;
+  place-content: center;
+  width: 300px;
+  padding: 30px;
+  border-radius: 4px;
 }
 
 .slide-container {
-    margin-top: 10px;
+  margin-top: 10px;
 }
 
 .slider-label {
-    text-align: center;
+  text-align: center;
 }
 
 .main {
-    display: flex;
-    justify-content: space-evenly;
-    position: relative;
-    z-index: 1;
+  display: flex;
+  justify-content: space-evenly;
+  position: relative;
+  z-index: 1;
 }
 
 button {
-    width: 100%
+  width: 100%
 }
 
 button:hover {
@@ -63,8 +63,8 @@ button:hover {
 }
 
 .btn-on {
-    box-shadow: inset -1px -1px #fff, inset 1px 1px #0a0a0a, inset -2px -2px #dfdfdf, inset 2px 2px grey;
-    text-shadow: 1px 1px #222
+  box-shadow: inset -1px -1px #fff, inset 1px 1px #0a0a0a, inset -2px -2px #dfdfdf, inset 2px 2px grey;
+  text-shadow: 1px 1px #222
 }
 
 .disable-selection {
@@ -81,18 +81,18 @@ button:hover {
 }
 
 .orientation-warning-box {
-    display: none;
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    text-align: center;
-    padding-top: 100px;
-    opacity: 0.9;
-    background-color: silver;
-    color: black;
-    z-index: 2;
+  display: none;
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  text-align: center;
+  padding-top: 100px;
+  opacity: 0.9;
+  background-color: silver;
+  color: black;
+  z-index: 2;
 }
 
 #toast-notification-box {
@@ -124,21 +124,49 @@ button:hover {
 
 /* animations to fade toast in and out */
 @-webkit-keyframes fadein {
-  from {bottom: 0; opacity: 0;}
-  to {bottom: 30px; opacity: 1;}
+  from {
+    bottom: 0;
+    opacity: 0;
+  }
+
+  to {
+    bottom: 30px;
+    opacity: 1;
+  }
 }
 
 @keyframes fadein {
-  from {bottom: 0; opacity: 0;}
-  to {bottom: 30px; opacity: 1;}
+  from {
+    bottom: 0;
+    opacity: 0;
+  }
+
+  to {
+    bottom: 30px;
+    opacity: 1;
+  }
 }
 
 @-webkit-keyframes fadeout {
-  from {bottom: 30px; opacity: 1;}
-  to {bottom: 0; opacity: 0;}
+  from {
+    bottom: 30px;
+    opacity: 1;
+  }
+
+  to {
+    bottom: 0;
+    opacity: 0;
+  }
 }
 
 @keyframes fadeout {
-  from {bottom: 30px; opacity: 1;}
-  to {bottom: 0; opacity: 0;}
+  from {
+    bottom: 30px;
+    opacity: 1;
+  }
+
+  to {
+    bottom: 0;
+    opacity: 0;
+  }
 }

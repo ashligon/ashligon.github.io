@@ -19,67 +19,67 @@ container.style.backgroundColor = gridBgColor;
 
 /* grid */
 function createGrid() {
-    let savedGridSize = localStorage.getItem('saved-grid-size');
-    if (savedGridSize !== null) {
-      gridSize = savedGridSize;
+  let savedGridSize = localStorage.getItem('saved-grid-size');
+  if (savedGridSize !== null) {
+    gridSize = savedGridSize;
 
-      gridSlider.value = gridSize;
-      let gridLabels = document.querySelectorAll('#range-value');
-      for (let i = 0; i < gridLabels.length; i++) {
-        gridLabels[i].textContent = gridSize;
+    gridSlider.value = gridSize;
+    let gridLabels = document.querySelectorAll('#range-value');
+    for (let i = 0; i < gridLabels.length; i++) {
+      gridLabels[i].textContent = gridSize;
+    }
+  }
+  let savedGrid = localStorage.getItem('saved-progress');
+  let savedGridMap = new Map();
+  if (savedGrid !== null) {
+    savedGridMap = new Map(Object.entries(JSON.parse(savedGrid)));
+  }
+
+  let gridWidth = container.offsetWidth / gridSize;
+  container.style.gridTemplateColumns = `repeat(${gridSize - 3}, ${gridWidth}px) 1fr 1fr 1fr`;
+  container.style.gridTemplateRows = `repeat(${gridSize - 3}, ${gridWidth}px) 1fr 1fr 1fr`;
+
+  for (let row = 0; row < gridSize; row++) {
+    for (let col = 0; col < gridSize; col++) {
+      const square = document.createElement('div');
+      square.classList.add('grid-item');
+      square.classList.add('disable-selection');
+      square.setAttribute('draggable', 'false');
+      square.setAttribute('data-grid-col', col);
+      square.setAttribute('data-grid-row', row);
+
+      if (savedGridMap.get(`${col},${row}`) === 'true') {
+        square.style.backgroundColor = gridInkColor;
+        square.setAttribute('data-inked', 'true');
+      } else {
+        square.style.backgroundColor = gridBgColor;
       }
+
+      // add numbering
+      if (col == 0) {
+        const num_label = document.createElement('p');
+        num_label.classList.add('num-label');
+        num_label.classList.add('disable-selection');
+        num_label.classList.add('disable-selection-text');
+        num_label.setAttribute('draggable', 'false');
+        num_label.setAttribute('data-grid-col', col);
+        num_label.setAttribute('data-grid-row', row);
+        num_label.textContent += `${(gridSize - row)}`;
+        square.appendChild(num_label);
+      } else if (row == gridSize - 1) {
+        const num_label = document.createElement('p');
+        num_label.classList.add('num-label');
+        num_label.classList.add('disable-selection');
+        num_label.classList.add('disable-selection-text');
+        num_label.setAttribute('draggable', 'false');
+        num_label.setAttribute('data-grid-col', col);
+        num_label.setAttribute('data-grid-row', row);
+        num_label.textContent += `${(col + 1)}`;
+        square.appendChild(num_label);
+      }
+      container.appendChild(square);
     }
-    let savedGrid = localStorage.getItem('saved-progress');
-    let savedGridMap = new Map();
-    if (savedGrid !== null) {
-      savedGridMap = new Map(Object.entries(JSON.parse(savedGrid)));
-    }
-
-    let gridWidth = container.offsetWidth / gridSize;
-    container.style.gridTemplateColumns = `repeat(${gridSize - 3}, ${gridWidth}px) 1fr 1fr 1fr`;
-    container.style.gridTemplateRows = `repeat(${gridSize - 3}, ${gridWidth}px) 1fr 1fr 1fr`;
-
-    for (let row = 0; row < gridSize; row++){
-        for (let col = 0; col < gridSize; col++) {
-            const square = document.createElement('div');
-            square.classList.add('grid-item');
-            square.classList.add('disable-selection');
-            square.setAttribute('draggable', 'false');
-            square.setAttribute('data-grid-col', col);
-            square.setAttribute('data-grid-row', row);
-
-            if (savedGridMap.get(`${col},${row}`) === 'true') {
-              square.style.backgroundColor = gridInkColor;
-              square.setAttribute('data-inked', 'true');
-            } else {
-              square.style.backgroundColor = gridBgColor;
-            }
-
-            // add numbering
-            if (col == 0) {
-                const num_label = document.createElement('p');
-                num_label.classList.add('num-label');
-                num_label.classList.add('disable-selection');
-                num_label.classList.add('disable-selection-text');
-                num_label.setAttribute('draggable', 'false');
-                num_label.setAttribute('data-grid-col', col);
-                num_label.setAttribute('data-grid-row', row);
-                num_label.textContent += `${(gridSize-row)}`;
-                square.appendChild(num_label);
-            } else if (row == gridSize-1) {
-                const num_label = document.createElement('p');
-                num_label.classList.add('num-label');
-                num_label.classList.add('disable-selection');
-                num_label.classList.add('disable-selection-text');
-                num_label.setAttribute('draggable', 'false');
-                num_label.setAttribute('data-grid-col', col);
-                num_label.setAttribute('data-grid-row', row);
-                num_label.textContent += `${(col+1)}`;
-                square.appendChild(num_label);
-            }
-            container.appendChild(square);
-        }
-    }
+  }
 }
 
 function deleteGrid() {
@@ -216,7 +216,7 @@ function savePatternProgress(e) {
   toast.textContent = 'progress saved';
   toast.className = 'show';
 
-  setTimeout(function() {
+  setTimeout(function () {
     toast.className = toast.className.replace('show', '');
   }, 3000);
 }
@@ -234,7 +234,7 @@ function exportPattern(e) {
     //   addData("pattern1", blob);
     // }, 'image/png');
     var base64image = canvas.toDataURL("image/png");
-    window.open(base64image , "_blank");
+    window.open(base64image, "_blank");
   });
 }
 
@@ -349,7 +349,7 @@ const handleOrientationChange = (e) => {
 
 /* listeners */
 function listen() {
-  window.matchMedia('(orientation: portrait)').addEventListener('change', handleOrientationChange); 
+  window.matchMedia('(orientation: portrait)').addEventListener('change', handleOrientationChange);
   document.addEventListener('mousedown', mouseDownOn);
   document.addEventListener('mouseup', mouseDownOff);
   mainWindow.addEventListener('contextmenu', toggleEraser);
