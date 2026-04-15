@@ -1,7 +1,7 @@
 ---
 layout: default
 title: project timer
-tags: crochet-tools
+tags: tools
 ---
 
 <head>
